@@ -1,0 +1,65 @@
+{
+  "tiers": {
+    "A1": "Top flagship",
+    "A2": "Flagship",
+    "B1": "Upper mid-range",
+    "B2": "Mid-range plus",
+    "C1": "Mid-range",
+    "C2": "Entry mid-range",
+    "D": "Budget"
+  },
+  "specs": [
+    {
+      "key": "matrixType",
+      "label": "Matrix type"
+    },
+    {
+      "key": "refreshRate",
+      "label": "Refresh rate"
+    },
+    {
+      "key": "screenBrightness",
+      "label": "Brightness"
+    },
+    {
+      "key": "screenDiagonal",
+      "label": "Diagonal"
+    },
+    {
+      "key": "processor",
+      "label": "Processor"
+    },
+    {
+      "key": "batteryCapacity",
+      "label": "Battery capacity"
+    },
+    {
+      "key": "chargingPower",
+      "label": "Charging power"
+    },
+    {
+      "key": "mainCamera",
+      "label": "Main camera"
+    },
+    {
+      "key": "frontCamera",
+      "label": "Front camera"
+    },
+    {
+      "key": "internalStorage",
+      "label": "Storage"
+    },
+    {
+      "key": "ram",
+      "label": "RAM"
+    },
+    {
+      "key": "nfc",
+      "label": "NFC"
+    },
+    {
+      "key": "waterResistance",
+      "label": "Water resistance"
+    }
+  ]
+}

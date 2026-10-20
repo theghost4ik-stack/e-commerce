@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Demo User"
+    }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "holder": "DEMO USER",
+      "last4": "4242",
+      "expiry": "12/30"
+    }
+  ],
+  "orders": []
+}

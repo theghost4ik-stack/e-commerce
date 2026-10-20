@@ -1,0 +1,5 @@
+[
+  { "code": "SALE10", "percent": 10 },
+  { "code": "PHONE15", "percent": 15 },
+  { "code": "MEGA25", "percent": 25 }
+]

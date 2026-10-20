@@ -1,0 +1,35 @@
+$color-bg: rgb(244, 245, 247);
+$color-surface: rgb(255, 255, 255);
+$color-surface-soft: rgb(248, 249, 251);
+$color-border: rgb(222, 226, 232);
+$color-text: rgb(44, 52, 64);
+$color-muted: rgb(116, 124, 137);
+$color-primary: rgb(58, 122, 200);
+$color-primary-hover: rgb(44, 102, 176);
+$color-primary-soft: rgba(58, 122, 200, 0.12);
+$color-danger: rgb(198, 78, 78);
+$color-danger-soft: rgba(198, 78, 78, 0.12);
+$color-success: rgb(68, 158, 104);
+$color-success-soft: rgba(68, 158, 104, 0.14);
+$color-warning: rgb(176, 140, 78);
+$color-overlay: rgba(30, 36, 46, 0.45);
+$color-shadow: rgba(30, 36, 46, 0.08);
+$color-shadow-strong: rgba(30, 36, 46, 0.18);
+$color-transparent: rgba(0, 0, 0, 0);
+
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+
+$tier-colors: (
+  'A1': rgb(122, 100, 160),
+  'A2': rgb(88, 120, 168),
+  'B1': rgb(84, 140, 130),
+  'B2': rgb(114, 148, 98),
+  'C1': rgb(176, 146, 80),
+  'C2': rgb(182, 120, 82),
+  'D': rgb(128, 134, 146)
+);
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 900px;
