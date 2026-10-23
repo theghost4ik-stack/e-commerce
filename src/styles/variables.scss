@@ -1,34 +1,36 @@
-$color-bg: rgb(244, 245, 247);
+$color-bg: rgb(247, 244, 238);
 $color-surface: rgb(255, 255, 255);
-$color-surface-soft: rgb(248, 249, 251);
-$color-border: rgb(222, 226, 232);
-$color-text: rgb(44, 52, 64);
-$color-muted: rgb(116, 124, 137);
-$color-primary: rgb(58, 122, 200);
-$color-primary-hover: rgb(44, 102, 176);
-$color-primary-soft: rgba(58, 122, 200, 0.12);
-$color-danger: rgb(198, 78, 78);
-$color-danger-soft: rgba(198, 78, 78, 0.12);
-$color-success: rgb(68, 158, 104);
-$color-success-soft: rgba(68, 158, 104, 0.14);
-$color-warning: rgb(176, 140, 78);
-$color-overlay: rgba(30, 36, 46, 0.45);
-$color-shadow: rgba(30, 36, 46, 0.08);
-$color-shadow-strong: rgba(30, 36, 46, 0.18);
+$color-surface-soft: rgb(250, 248, 244);
+$color-border: rgb(228, 222, 212);
+$color-text: rgb(30, 33, 40);
+$color-muted: rgb(105, 108, 116);
+$color-primary: rgb(27, 79, 156);
+$color-primary-hover: rgb(19, 61, 124);
+$color-primary-soft: rgba(27, 79, 156, 0.1);
+$color-danger: rgb(178, 48, 48);
+$color-danger-soft: rgba(178, 48, 48, 0.1);
+$color-success: rgb(30, 122, 82);
+$color-success-soft: rgba(30, 122, 82, 0.12);
+$color-warning: rgb(161, 98, 7);
+$color-overlay: rgba(20, 22, 28, 0.5);
+$color-shadow: rgba(60, 45, 20, 0.06);
+$color-shadow-strong: rgba(60, 45, 20, 0.16);
 $color-transparent: rgba(0, 0, 0, 0);
+$color-favorite: rgb(200, 45, 85);
+$color-favorite-soft: rgba(200, 45, 85, 0.1);
 
-$radius-sm: 6px;
-$radius-md: 10px;
-$radius-lg: 14px;
+$radius-sm: 16px;
+$radius-md: 14px;
+$radius-lg: 12px;
 
 $tier-colors: (
-  'A1': rgb(122, 100, 160),
-  'A2': rgb(88, 120, 168),
-  'B1': rgb(84, 140, 130),
-  'B2': rgb(114, 148, 98),
-  'C1': rgb(176, 146, 80),
-  'C2': rgb(182, 120, 82),
-  'D': rgb(128, 134, 146)
+  'A1': rgb(128, 32, 64),
+  'A2': rgb(168, 64, 40),
+  'B1': rgb(156, 100, 10),
+  'B2': rgb(100, 116, 30),
+  'C1': rgb(20, 118, 108),
+  'C2': rgb(48, 96, 150),
+  'D': rgb(100, 106, 118)
 );
 
 $breakpoint-sm: 640px;

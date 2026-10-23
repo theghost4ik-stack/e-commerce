@@ -14,7 +14,7 @@
           variant="secondary"
           size="sm"
           :icon="favorite ? 'mdi-heart' : 'mdi-heart-outline'"
-          :class="{ 'product-card__action--active': favorite }"
+          :class="{ 'product-card__action--favorite': favorite }"
           @click="toggleFavorite"
         />
       </CustomTooltip>
@@ -143,6 +143,13 @@ function onCartClick() {
     display: flex;
     flex-direction: column;
     gap: 6px;
+  }
+
+  &__action.product-card__action--favorite,
+  &__action.product-card__action--favorite:hover:not(:disabled) {
+    color: $color-favorite;
+    border-color: $color-favorite;
+    background-color: $color-favorite-soft;
   }
 
   &__action--active {
