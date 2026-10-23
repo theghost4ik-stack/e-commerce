@@ -3,49 +3,84 @@
     <h1 class="page-title">Checkout</h1>
 
     <div v-if="items.length" class="checkout__layout">
-      <section class="checkout__payment">
-        <h2 class="checkout__section-title">Payment method</h2>
+      <div class="checkout__main">
+        <section class="checkout__payment">
+          <h2 class="checkout__section-title">Delivery address</h2>
 
-        <CustomSelect v-model="selectedCardId" label="Card" :options="cardOptions" />
-
-        <div v-if="selectedCardId === 'new'" class="checkout__form">
           <CustomInput
-            v-model="form.holder"
-            label="Name on card"
-            placeholder="JOHN SMITH"
-            :error="errors.holder"
+            v-model="address.recipient"
+            label="Recipient"
+            icon="mdi-account-outline"
+            placeholder="Full name"
+            :error="addressErrors.recipient"
           />
           <CustomInput
-            :model-value="form.number"
-            label="Card number"
-            icon="mdi-credit-card-outline"
-            placeholder="0000 0000 0000 0000"
-            :error="errors.number"
-            @update:model-value="form.number = formatCardNumber($event)"
+            :model-value="address.phone"
+            label="Phone"
+            icon="mdi-phone-outline"
+            placeholder="+998 90 123 45 67"
+            :error="addressErrors.phone"
+            @update:model-value="address.phone = formatPhone($event)"
+          />
+          <CustomSelect v-model="address.city" label="City" :options="cityOptions" />
+          <CustomInput
+            v-model="address.street"
+            label="Street"
+            icon="mdi-map-marker-outline"
+            placeholder="Amir Temur street"
+            :error="addressErrors.street"
           />
           <div class="checkout__form-row">
+            <CustomInput v-model="address.house" label="House" placeholder="15" :error="addressErrors.house" />
+            <CustomInput v-model="address.apartment" label="Apartment" placeholder="Optional" />
+          </div>
+          <CustomInput v-model="address.comment" label="Comment for courier" placeholder="Optional" />
+        </section>
+
+        <section class="checkout__payment">
+          <h2 class="checkout__section-title">Payment method</h2>
+
+          <CustomSelect v-model="selectedCardId" label="Card" :options="cardOptions" />
+
+          <div v-if="selectedCardId === 'new'" class="checkout__form">
             <CustomInput
-              :model-value="form.expiry"
-              label="Expiry"
-              placeholder="MM/YY"
-              :error="errors.expiry"
-              @update:model-value="form.expiry = formatExpiry($event)"
+              v-model="form.holder"
+              label="Name on card"
+              placeholder="JOHN SMITH"
+              :error="errors.holder"
             />
             <CustomInput
-              :model-value="form.cvv"
-              label="CVV"
-              type="password"
-              placeholder="***"
-              :error="errors.cvv"
-              @update:model-value="form.cvv = formatCvv($event)"
+              :model-value="form.number"
+              label="Card number"
+              icon="mdi-credit-card-outline"
+              placeholder="0000 0000 0000 0000"
+              :error="errors.number"
+              @update:model-value="form.number = formatCardNumber($event)"
             />
+            <div class="checkout__form-row">
+              <CustomInput
+                :model-value="form.expiry"
+                label="Expiry"
+                placeholder="MM/YY"
+                :error="errors.expiry"
+                @update:model-value="form.expiry = formatExpiry($event)"
+              />
+              <CustomInput
+                :model-value="form.cvv"
+                label="CVV"
+                type="password"
+                placeholder="***"
+                :error="errors.cvv"
+                @update:model-value="form.cvv = formatCvv($event)"
+              />
+            </div>
+
+            <CustomCheckbox v-model="saveCard">Save this card for future purchases</CustomCheckbox>
           </div>
 
-          <CustomCheckbox v-model="saveCard">Save this card for future purchases</CustomCheckbox>
-        </div>
-
-        <p v-if="errorMessage" class="checkout__error">{{ errorMessage }}</p>
-      </section>
+          <p v-if="errorMessage" class="checkout__error">{{ errorMessage }}</p>
+        </section>
+      </div>
 
       <aside class="checkout__aside">
         <h2 class="checkout__section-title">Your order</h2>
@@ -81,6 +116,7 @@
         <strong>{{ formatPrice(placedOrder.total) }}</strong> was paid with card
         <strong>**** {{ placedOrder.cardLast4 }}</strong>.
       </p>
+      <p>Delivery to: <strong>{{ formatAddress(placedOrder.address) }}</strong></p>
       <template #footer>
         <CustomButton variant="secondary" @click="$router.push({ name: 'catalog' })">Continue shopping</CustomButton>
         <CustomButton @click="$router.push({ name: 'profile' })">View orders</CustomButton>
@@ -101,6 +137,7 @@ import EmptyState from '@/components/common/EmptyState.vue'
 import OrderSummary from '@/components/cart/OrderSummary.vue'
 import { formatPrice } from '@/utils/format'
 import { formatCardNumber, formatExpiry, formatCvv, validateCard } from '@/utils/card'
+import { cities, formatPhone, validateAddress, formatAddress } from '@/utils/address'
 
 const store = useStore()
 
@@ -112,7 +149,7 @@ const total = computed(() => store.getters['cart/total'])
 
 const cards = store.getters['payment/userCards']
 
-const cardOptions = cards.map(card => ({ value: card.id, label: '**** ' + card.last4 + ' - ' + card.holder }))
+const cardOptions = cards.map(card => ({ value: card.id, label: `**** ${card.last4} - ${card.holder}` }))
 cardOptions.push({ value: 'new', label: 'New card' })
 
 const selectedCardId = ref(cards.length ? cards[0].id : 'new')
@@ -128,23 +165,46 @@ const form = reactive({
   cvv: ''
 })
 
+const cityOptions = cities.map(city => ({ value: city, label: city }))
+
+const lastOrder = store.getters['payment/userOrders'][0]
+
+const address = reactive({
+  recipient: '',
+  phone: '+998 ',
+  city: 'Tashkent',
+  street: '',
+  house: '',
+  apartment: '',
+  comment: ''
+})
+
+if (lastOrder && lastOrder.address) {
+  Object.assign(address, lastOrder.address)
+}
+
+const addressErrors = ref({})
+
 async function onPay() {
   errorMessage.value = ''
   errors.value = {}
 
   const isNewCard = selectedCardId.value === 'new'
 
+  addressErrors.value = validateAddress(address)
   if (isNewCard) {
     errors.value = validateCard(form)
-    if (Object.keys(errors.value).length > 0) {
-      return
-    }
+  }
+
+  if (Object.keys(addressErrors.value).length > 0 || Object.keys(errors.value).length > 0) {
+    return
   }
 
   const result = await store.dispatch('payment/purchase', {
     cardId: isNewCard ? null : selectedCardId.value,
     newCard: form,
-    saveNewCard: saveCard.value
+    saveNewCard: saveCard.value,
+    address: { ...address }
   })
 
   if (!result.ok) {
@@ -164,6 +224,12 @@ async function onPay() {
     grid-template-columns: minmax(0, 1fr) 360px;
     gap: 24px;
     align-items: start;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
   &__payment,

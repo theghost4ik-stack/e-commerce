@@ -48,6 +48,10 @@
               <span>{{ formatPrice(item.price * item.qty) }}</span>
             </li>
           </ul>
+          <div v-if="order.address" class="profile__order-address">
+            <i class="mdi mdi-map-marker-outline"></i>
+            {{ formatAddress(order.address) }} · {{ order.address.phone }}
+          </div>
           <div class="profile__order-foot">
             <span>Card **** {{ order.cardLast4 }}</span>
             <span v-if="order.promoCode">Promo {{ order.promoCode }}: -{{ formatPrice(order.discount) }}</span>
@@ -82,6 +86,7 @@ import CustomDialog from '@/components/custom-kit/CustomDialog.vue'
 import CustomTooltip from '@/components/custom-kit/CustomTooltip.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
 import { formatDate, formatPrice } from '@/utils/format'
+import { formatAddress } from '@/utils/address'
 
 const router = useRouter()
 const store = useStore()
@@ -227,6 +232,12 @@ function onLogout() {
       display: flex;
       justify-content: space-between;
     }
+  }
+
+  &__order-address {
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: $color-muted;
   }
 
   &__order-foot {

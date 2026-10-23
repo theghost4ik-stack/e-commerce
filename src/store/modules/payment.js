@@ -31,7 +31,7 @@ export default {
     deleteCard({ commit }, cardId) {
       commit('removeCard', cardId)
     },
-    purchase({ state, commit, dispatch, getters, rootState, rootGetters }, { cardId, newCard, saveNewCard }) {
+    purchase({ state, commit, dispatch, getters, rootState, rootGetters }, { cardId, newCard, saveNewCard, address }) {
       const userId = rootState.auth.currentUserId
       const entries = rootGetters['cart/detailed']
 
@@ -78,7 +78,8 @@ export default {
         discount: rootGetters['cart/discount'],
         promoCode: promo ? promo.code : '',
         total: rootGetters['cart/total'],
-        cardLast4
+        cardLast4,
+        address
       }
 
       commit('addOrder', order)
